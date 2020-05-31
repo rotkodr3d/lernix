@@ -1,7 +1,8 @@
 spring:
+  profiles:    include:    - lifecycle
   jpa:
     hibernate:
-      ddl-auto: create #update #create-drop, none, validate, update
+      ddl-auto: update #update #create-drop, none, validate, update
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://localhost:3306/lernix?serverTimezone=UTC

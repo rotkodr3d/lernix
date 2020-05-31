@@ -1,0 +1,22 @@
+demo-data:
+  users:
+    - mat-nr: 123456
+      email: derdoktor48@web.de
+      user-name: rotkodr3d
+      password:
+      write_exam: 6
+  exams:
+    - exam-nr: 6
+      exam-name: Wahlfach
+      date: 07.06.2020
+      write-exam: 6
+  exercises:
+    - id: 1
+      type: Hausarbeit
+      time-need: 20
+      time-worked: 15
+      deadline: 07.06.2020
+      exercise-for-exam: 6
+      student: 123456
+  learn-units:
+  
