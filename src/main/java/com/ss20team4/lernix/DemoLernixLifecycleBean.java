@@ -30,7 +30,6 @@ import com.ss20team4.lernix.repos.UserRepo;
 @Component
 public class DemoLernixLifecycleBean {
 
-	private boolean running;
 	@Autowired
 	private UserRepo userRepo;
 	@Autowired
@@ -49,9 +48,7 @@ public class DemoLernixLifecycleBean {
 			createUser();
 			createExercises();
 			createLearnUnits();
-		}
-		running = true;
-		
+		}	
 	}
 	
 	private void createUser() {
@@ -103,6 +100,7 @@ public class DemoLernixLifecycleBean {
 			exercise.setStudent(userRepo.getOne(demoExercise.getStudent()));
 			exercise.setTimeNeed(demoExercise.getTimeNeed());
 			exercise.setTimeWorked(demoExercise.getTimeWorked());
+			exercise.setExerciseForExam(examRepo.getOne(demoExercise.getExerciseForExam()));
 			try {
 				exercise.setDeadline(new Date(sdf.parse(demoExercise.getDeadline()).getTime()));
 			} catch (ParseException e) {

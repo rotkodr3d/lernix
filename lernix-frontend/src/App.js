@@ -1,66 +1,31 @@
 import React, { Component } from 'react';
+import { BrowserRouter, Route, Switch } from "react-router-dom";
+
+import Home from "./Home"; 
+import Navigation from "./Navigation";
+import AddExercise from "./exercise/AddExercise";
+import ShowExercise from "./exercise/ShowExercise";
+import ShowExercises from "./exercise/ShowExercises";
+
 import logo from './logo.svg';
 import './App.css';
 
-class App extends Component {
-
-  state = {
-    isLoading: false,
-    greeting: ""
-  };
-
-  sayHello = async (event) => {
-
-    event.preventDefault();
-    let response = await fetch('/greeting?name=' + this.state.greeting);
-    let body = await response.json();
-    this.setState({ greeting: body.message, isLoading: false, isGreetingVisible: '' });
-
-  }
-
-  updateName = (event) => {
-
-    event.preventDefault();
-
-    this.setState({greeting: event.target.value, isLoading: false});
-
-  }
-
-  render() {
-
-    const {greeting, isLoading} = this.state;
-
-    if (isLoading) {
-
-
-    }
-
-    return (
-
-<div className="App">
-
-<header className="App-header">
-
-        <img src={logo} className="App-logo" alt="logo" />
-
-<div className="App-intro">
-
-            <input onChange={(event)=>this.updateName(event)} placeholder="Enter Your Name"></input>
-
-            <button onClick={(event)=>this.sayHello(event)}>Please Click Me!</button>
-
-<h2 style={{visibility: this.isGreetingVisible}}>Hello {this.state.greeting}</h2>
-
-        </div>
-
-        </header>
-
+const App = () => (
+  <BrowserRouter>
+    <div className="App">
+      <header className="App-header">
+        <h1 className="App-title">Lernix</h1>
+        <Navigation/>
+      </header>
+      <div>
+        <Switch>
+          <Route path="/addExercise" component={AddExercise}/>
+          <Route path="/exercises" component={ShowExercises}/>
+          <Route exact path="/" component={Home}/>
+        </Switch>
+      </div>
     </div>
-
-    );
-
-  }
-
-}
+  </BrowserRouter>
+)
 
 export default App;

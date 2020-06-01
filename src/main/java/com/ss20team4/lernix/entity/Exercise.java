@@ -9,6 +9,10 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 
 
 @Entity
@@ -29,6 +33,7 @@ public class Exercise {
 	@JoinColumn(name = "exerciseForExam")
 	private Exam exerciseForExam;
 	
+	@JsonIgnore
 	@ManyToOne
 	private User student;
 	
@@ -78,6 +83,14 @@ public class Exercise {
 
 	public void setStudent(User student) {
 		this.student = student;
+	}
+	
+	public Exam getExerciseForExam() {
+		return exerciseForExam;	
+	}
+	
+	public void setExerciseForExam(Exam exerciseForExam) {
+		this.exerciseForExam = exerciseForExam;
 	}
 //	@ManyToOne
 //	private LearningEffort learningEffort;

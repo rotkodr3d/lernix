@@ -3,6 +3,7 @@ demo-data:
     - examNr: 6
       examName: Wahlfach
       date: 07.06.2020
+      learningTimeNeed: 100
       writeExam: 6
   users:
     - matNr: 123456
@@ -15,6 +16,13 @@ demo-data:
       type: Hausarbeit
       timeNeed: 20
       timeWorked: 15
+      deadline: 15.06.2020
+      exerciseForExam: 6
+      student: 123456
+    - id: 2
+      type: Projekt
+      timeNeed: 30
+      timeWorked: 22
       deadline: 07.06.2020
       exerciseForExam: 6
       student: 123456

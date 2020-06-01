@@ -10,6 +10,9 @@ import javax.persistence.ManyToMany;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 @Entity
 public class Exam {
 
@@ -23,6 +26,7 @@ public class Exam {
 	@NotNull
 	private Date date;
 
+	@JsonIgnore
 	@ManyToMany(mappedBy = "examsToWrite")
 	private Set<User> writeExam;
 	
