@@ -1,31 +1,15 @@
-package com.ss20team4.lernix.entity;
+package com.ss20team4.lernix.model;
 
-import java.sql.Date;
 import java.util.Set;
+import org.springframework.stereotype.Component;
+import com.ss20team4.lernix.entity.User;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.ManyToMany;
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
-
-@Entity
-public class Exam {
-
-	@Id
-	@Column(unique = true)
+@Component
+public class ExamDemoMapping {
 	private Integer examNr;
-	
-	@NotEmpty
 	private String examName;
-	
-	@NotNull
-	private Date date;
-
-	@ManyToMany(mappedBy = "examsToWrite")
-	private Set<User> writeExam;
-	
+	private String date;
+	private Set<Integer> writeExam;
 	private Integer learningTimeNeed;
 	
 	public Integer getExamNr() {
@@ -44,19 +28,19 @@ public class Exam {
 		this.examName = examName;
 	}
 
-	public Date getDate() {
+	public String getDate() {
 		return date;
 	}
 
-	public void setDate(Date date) {
+	public void setDate(String date) {
 		this.date = date;
 	}
 
-	public Set<User> getWriteExam() {
+	public Set<Integer> getWriteExam() {
 		return writeExam;
 	}
 
-	public void setWriteExam(Set<User> writeExam) {
+	public void setWriteExam(Set<Integer> writeExam) {
 		this.writeExam = writeExam;
 	}
 

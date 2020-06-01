@@ -6,4 +6,5 @@ import com.ss20team4.lernix.entity.Exam;
 
 public interface ExamRepo extends JpaRepository<Exam, Integer> {
 
+	//public Exam get;
 }

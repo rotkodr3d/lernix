@@ -1,52 +1,38 @@
-package com.ss20team4.lernix.entity;
+package com.ss20team4.lernix.model;
 
-import java.sql.Date;
+import org.springframework.stereotype.Component;
+import com.ss20team4.lernix.entity.Exam;
+import com.ss20team4.lernix.entity.User;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.validation.constraints.NotNull;
+@Component
+public class LearnUnitDemoMapping {
 
-@Entity
-public class LearnUnit {
-	
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer id;
 	
 	/**
 	 * The date the user wants to learn
 	 */
-	@NotNull
-	private Date learningDate;
+	private String learningDate;
 	
 	/**
 	 * Planned time to learn
 	 */
-	@NotNull
 	private Integer timeToLearn;	
 
 	/**
 	 * Actual time learned
 	 */
-	@NotNull
 	private Integer timeLearned;
 	
 	/**
 	 * The exam the user is learning for
 	 */
-	@ManyToOne
-	@JoinColumn(name="learningForExam")
-	private Exam exam;
+	private Integer exam;
 	
 	/**
 	 * The user who is learning
 	 */
-	@ManyToOne
-	private User learner;
+	private Integer learner;
 	
 	public Integer getId() {
 		return id;
@@ -56,11 +42,11 @@ public class LearnUnit {
 		this.id = id;
 	}
 
-	public Date getLearningDate() {
+	public String getLearningDate() {
 		return learningDate;
 	}
 
-	public void setLearningDate(Date learningDate) {
+	public void setLearningDate(String learningDate) {
 		this.learningDate = learningDate;
 	}
 
@@ -80,19 +66,19 @@ public class LearnUnit {
 		this.timeLearned = timeLearned;
 	}
 
-	public Exam getExam() {
+	public Integer getExam() {
 		return exam;
 	}
 
-	public void setExam(Exam exam) {
+	public void setExam(Integer exam) {
 		this.exam = exam;
 	}
 
-	public User getLearner() {
+	public Integer getLearner() {
 		return learner;
 	}
 
-	public void setLearner(User learner) {
+	public void setLearner(Integer learner) {
 		this.learner = learner;
 	}
 }

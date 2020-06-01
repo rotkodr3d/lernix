@@ -13,8 +13,6 @@ import javax.validation.constraints.NotEmpty;
 
 /**
  * 
- * @author Christian
- *
  * In this case the user is the student
  */
 
@@ -41,4 +39,44 @@ public class User {
 			joinColumns = @JoinColumn(name = "mat_nr"),
 			inverseJoinColumns = @JoinColumn(name = "exam_nr"))
 	private Set<Exam> examsToWrite;
+
+	public Integer getMatNr() {
+		return matNr;
+	}
+
+	public void setMatNr(Integer matNr) {
+		this.matNr = matNr;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public String getUserName() {
+		return userName;
+	}
+
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
+	public Set<Exam> getExamsToWrite() {
+		return examsToWrite;
+	}
+
+	public void setExamsToWrite(Set<Exam> examsToWrite) {
+		this.examsToWrite = examsToWrite;
+	}
 }
