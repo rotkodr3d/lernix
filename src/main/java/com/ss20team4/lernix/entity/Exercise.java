@@ -10,6 +10,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
@@ -27,6 +28,7 @@ public class Exercise {
 	
 	private Float timeWorked;
 	
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern= "dd.MM.yyyy")
 	private Date deadline;
 	
 	@ManyToOne

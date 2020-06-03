@@ -1,17 +1,24 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-const Exercise = ({ type, exam }) => {
+const Exercise = ({ type, exam, deadline, timeNeed, timeWorked }) => {
 	return (
-		<div className="exercise">
-			<h3>{type} zur Prüfung {exam}</h3>
-		</div>
+		<tr className="exercise">
+			<td>{type}</td>
+			<td>{exam}</td>
+			<td>{timeWorked}</td>
+			<td>{timeNeed}</td>
+			<td>{deadline}</td>
+		</tr>
 	);
 };
 
 Exercise.propTypes = {
 	type: PropTypes.string,
 	exam: PropTypes.string,
+	deadline: PropTypes.string,
+	timeNeed: PropTypes.number,
+	timeWorked: PropTypes.number
 };
 
 export default Exercise;
