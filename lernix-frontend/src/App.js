@@ -16,9 +16,9 @@ import './App.css';
 
 const App = () => (
   <BrowserRouter>
-    <div className="App">
+    <div className="">
         <Navigation/>
-        <div class="container">
+        <div className="container">
           <div>
             <Switch>
               <Route path="/addExercise" component={AddExercise}/>

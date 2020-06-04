@@ -24,7 +24,7 @@ class Navigation extends Component {
 							<NavDropdown.Item as={Link} to="/exercises">
 								anzeigen
 							</NavDropdown.Item>
-							<NavDropdown.Item as={Link} to="/addExercises">
+							<NavDropdown.Item as={Link} to="/addExercise">
 								hinzufügen
 							</NavDropdown.Item>
 						</NavDropdown>

@@ -16,6 +16,7 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @RestController
 @RequestMapping(path="/get")
@@ -31,23 +32,26 @@ public class LernixGetController {
 	public String getExercises() {
 		ObjectMapper objectMapper = new ObjectMapper();
 		List<Exercise> exercises = exerciseRepo.findAll().stream().sorted(Comparator.comparing(Exercise::getDeadline)).collect(Collectors.toList());
-		try {
-			return objectMapper.writeValueAsString(exercises);
-		} catch (JsonProcessingException e) {
-			e.printStackTrace();
-			return "";
-		}
+		return toJson(objectMapper, exercises);
 	}
 	
 	@GetMapping("/exams")
-	public String getExams() {
+	public String getExams(@RequestParam(value = "onlyNr", defaultValue = "false", required = false) String onlyNr) {
 		ObjectMapper objectMapper = new ObjectMapper();
+		if (Boolean.parseBoolean(onlyNr)) {
+			List<Integer> examNrs = examRepo.getAllExamNrs();
+			return toJson(objectMapper, examNrs);
+		}
 		List<Exam> exams = examRepo.findAll();
+		return toJson(objectMapper, exams);
+	}
+	
+	private String toJson(ObjectMapper objectMapper, Object value) {
 		try {
-			return objectMapper.writeValueAsString(exams);
+			return objectMapper.writeValueAsString(value);
 		} catch (JsonProcessingException e) {
 			e.printStackTrace();
-			return "";
+			return "{error: true}";
 		}
 	}
 }
