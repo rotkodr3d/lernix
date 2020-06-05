@@ -1,40 +1,29 @@
-import React, { Component } from 'react';
-import {Redirect} from 'react-router-dom';
 import '../App.css';
+
+import React, { Component } from "react";
 
 import Alert from "react-bootstrap/Alert"
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row"
 
-import ExerciseForm from "./ExerciseForm";
+import ExamForm from "./ExamForm";
 
-class AddExercise extends Component {
+class CreateExam extends Component {
 
 	constructor() {
 		super();
 		this.state = {
-			exams: {},
 			error: false,
-			redirect: false
 		}
 	}
-	async getData() {
-		let response = await fetch('/get/exams');
-		let body = await response.json();
-		console.log(body)
-		let exams  = body;
-		this.setState({exams: exams});
-	}
-
-	onSubmit = (newExercise) => {
-		//const {exerciseForExam, type, deadline} = this.state;
+	onSubmit = (newExam) => {
 
 		const requestOptions = {
 			method: 'POST',
 			headers: {'Content-Type': 'application/json'},
-			body: JSON.stringify(newExercise)
+			body: JSON.stringify(newExam)
 		}
-		fetch("/post/exercise", requestOptions)
+		fetch("/post/exam", requestOptions)
 			.then((response) => response.json()
 			.then((json) => {
 				console.log(json["error"]);
@@ -52,31 +41,21 @@ class AddExercise extends Component {
 	}
 
 	render() {
-		const { exams, error } = this.state;
+		const { error } = this.state;
 		return(
 		<>
 			<Row className="justify-content-md-center">
-				<h1 className="center mt-3">Aufgabe erstellen</h1>
+				<h1 className="center mt-3">Prüfung erstellen</h1>
 			</Row>
 			{this.state.alert}
 			<Row className="justify-content-md-center">
 				<Col md="10">
-					{
-						exams.length > 0 ? (
-							<ExerciseForm exams={exams} addExercise={this.onSubmit}/>
-						) : (
-							<Alert className="mt-5"></Alert>
-						)
-					}
+					<ExamForm createExam={this.onSubmit}/>
 				</Col>
 			</Row>	
 		</>
 		);
 	}
-
-	componentDidMount() {
-		this.getData();
-	}
 }
 
-export default AddExercise;
+export default CreateExam;

@@ -1,8 +1,8 @@
 import React from "react";
 
-const Option = ({value, text}) => {
+const Option = ({value, text, callBack}) => {
 	return(
-		<option value={value}>{text}</option>
+		<option value={value} onChange={callBack}>{text}</option>
 	);
 }
 
