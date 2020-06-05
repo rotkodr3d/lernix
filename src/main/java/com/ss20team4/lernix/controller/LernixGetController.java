@@ -8,9 +8,11 @@ import com.ss20team4.lernix.entity.Exam;
 import com.ss20team4.lernix.entity.Exercise;
 import com.ss20team4.lernix.repos.ExamRepo;
 import com.ss20team4.lernix.repos.ExerciseRepo;
+import com.ss20team4.lernix.repos.UserRepo;
 
 import java.util.Comparator;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +30,9 @@ public class LernixGetController {
 	@Autowired
 	private ExamRepo examRepo;
 	
+	@Autowired
+	private UserRepo userRepo;
+	
 	@GetMapping("/exercises")
 	public String getExercises() {
 		ObjectMapper objectMapper = new ObjectMapper();
@@ -36,11 +41,12 @@ public class LernixGetController {
 	}
 	
 	@GetMapping("/exams")
-	public String getExams(@RequestParam(value = "onlyNr", defaultValue = "false", required = false) String onlyNr) {
+	public String getExams(@RequestParam(value = "matnr", defaultValue="", required = false) String matnr) {
 		ObjectMapper objectMapper = new ObjectMapper();
-		if (Boolean.parseBoolean(onlyNr)) {
-			List<Integer> examNrs = examRepo.getAllExamNrs();
-			return toJson(objectMapper, examNrs);
+		if (!matnr.trim().isEmpty()) {
+			Integer matNr = Integer.parseInt(matnr);
+			Set<Exam> exams = userRepo.getOne(matNr).getExamsToWrite();
+			return toJson(objectMapper, exams);
 		}
 		List<Exam> exams = examRepo.findAll();
 		return toJson(objectMapper, exams);

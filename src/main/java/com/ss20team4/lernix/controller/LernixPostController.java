@@ -5,9 +5,12 @@ import org.springframework.web.bind.annotation.RestController;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.ss20team4.lernix.entity.Exam;
 import com.ss20team4.lernix.entity.Exercise;
+import com.ss20team4.lernix.entity.User;
 import com.ss20team4.lernix.repos.ExamRepo;
 import com.ss20team4.lernix.repos.ExerciseRepo;
+import com.ss20team4.lernix.repos.UserRepo;
 
 import java.sql.Date;
 import java.text.DateFormat;
@@ -36,6 +39,9 @@ public class LernixPostController {
 	@Autowired
 	ExamRepo examRepo;
 	
+	@Autowired
+	UserRepo userRepo;
+	
 	@PostMapping("/learnUnit")
 	public String createLearnUnit() {
 		return "";	
@@ -59,8 +65,21 @@ public class LernixPostController {
 		return new ResponseEntity<>(new ObjectMapper().writeValueAsString("{success: true}"), HttpStatus.OK);
 	}
 	
+	@PostMapping(path="/exam")
+	public ResponseEntity<String> createExam(@RequestBody Exam newExam) throws JsonProcessingException {
+		if (!examRepo.existsById(newExam.getExamNr())) {
+			examRepo.save(newExam);
+			return new ResponseEntity<>(new ObjectMapper().writeValueAsString("{success: true}"), HttpStatus.OK);
+		}
+		return new ResponseEntity<>(new ObjectMapper().writeValueAsString("{error: {message: Prüfung konnte nicht gespeichert werden!}}"), HttpStatus.BAD_REQUEST);
+	}
+	
 	@PostMapping("/user")
-	public String createUSer() {
-		return "";
+	public ResponseEntity<String> createUser(@RequestBody User newUser) throws JsonProcessingException {
+		if (!userRepo.existsById(newUser.getMatNr())) {
+			userRepo.save(newUser);
+			return new ResponseEntity<>(new ObjectMapper().writeValueAsString("{success: true}"), HttpStatus.OK);
+		}
+		return new ResponseEntity<>(new ObjectMapper().writeValueAsString("{error: {message: Prüfung konnte nicht gespeichert werden!}}"), HttpStatus.BAD_REQUEST);
 	}
 }

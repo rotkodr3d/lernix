@@ -21,7 +21,7 @@ class ExamForm extends Component {
 		const { createExam } = this.props;
 		e.preventDefault();
 
-		if (examNr === "" || examName == "" || date == "" || learningTimeNeed == "") {
+		if (examNr === "" || examName === "" || date === "" || learningTimeNeed === "") {
 			alert("Bitte überprüfe deine Eingaben auf Vollständigkeit.");
 		} else {
 			createExam({

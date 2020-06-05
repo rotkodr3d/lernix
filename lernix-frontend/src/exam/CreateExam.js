@@ -17,6 +17,12 @@ class CreateExam extends Component {
 		}
 	}
 	onSubmit = (newExam) => {
+		let date = newExam.date.split("-");
+		let sqlDate = "";
+		for (let i = date.length - 1 ; i >= 0; i--) {
+			(i != 0 ? sqlDate += (date[i] + ".") : sqlDate += (date[i]));
+		}
+		newExam.date = sqlDate;
 
 		const requestOptions = {
 			method: 'POST',
@@ -27,9 +33,9 @@ class CreateExam extends Component {
 			.then((response) => response.json()
 			.then((json) => {
 				console.log(json["error"]);
-				if (response.status == 200) {
+				if (response.status === 200) {
 					this.setState({alert: <Alert variant="success" className="mt-5">Aufgabe wurde angelegt!</Alert>});
-				} else if (response.status == 400) {
+				} else if (response.status === 400) {
 					this.setState({alert: <Alert variant="warning" className="mt-5">Bitte überprüfe deine Eingaben und versuche es erneut.</Alert>});
 				}
 			})

@@ -2,18 +2,20 @@ import React, { Component } from "react";
 import Table from "react-bootstrap/Table";
 
 import Exam from "./Exam";
+import ChooseExam from "./ChooseExam";
 
 class ShowExams extends Component {
 
 	constructor() {
 		super();
 		this.state = {
-			exams: {}
+			exams: {},
+			matNr: 123456
 		};
 	}
 
 	async getExams() {
-		let response = await fetch('/get/exams');
+		let response = await fetch('/get/exams?matnr=' + this.state.matNr);
 		let body = await response.json();
 
 		this.setState({exams: body});

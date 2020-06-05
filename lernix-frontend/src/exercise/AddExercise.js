@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import {Redirect} from 'react-router-dom';
 import '../App.css';
 
 import Alert from "react-bootstrap/Alert"
@@ -38,9 +37,9 @@ class AddExercise extends Component {
 			.then((response) => response.json()
 			.then((json) => {
 				console.log(json["error"]);
-				if (response.status == 200) {
+				if (response.status === 200) {
 					this.setState({alert: <Alert variant="success" className="mt-5">Aufgabe wurde angelegt!</Alert>});
-				} else if (response.status == 400) {
+				} else if (response.status === 400) {
 					this.setState({alert: <Alert variant="warning" className="mt-5">Bitte überprüfe deine Eingaben und versuche es erneut.</Alert>});
 				}
 			})
@@ -65,7 +64,7 @@ class AddExercise extends Component {
 						exams.length > 0 ? (
 							<ExerciseForm exams={exams} addExercise={this.onSubmit}/>
 						) : (
-							<Alert className="mt-5"></Alert>
+							<Alert className="mt-5" variant="warning"></Alert>
 						)
 					}
 				</Col>
