@@ -3,6 +3,8 @@ import PropTypes from "prop-types";
 import { Redirect } from "react-router-dom";
 
 import Button from "react-bootstrap/Button";
+import Col from "react-bootstrap/Col";
+import Row from "react-bootstrap/Row";
 
 class Exercise extends Component {
 
@@ -39,8 +41,14 @@ class Exercise extends Component {
 				<td>{this.props.timeNeed}</td>
 				<td>{this.props.deadline}</td>
 				<td>
-					<Button name="edit" onClick={this.onClick}>Bearbeiten</Button>
-					<Button name="book-work" onClick={this.onClick}>Arbeit buchen</Button>
+					<Row>
+						<Col>
+							<Button name="edit" onClick={this.onClick}>Bearbeiten</Button>
+						</Col>
+						<Col>
+							<Button name="book-work" onClick={this.onClick}>Arbeit buchen</Button>
+						</Col>
+					</Row>
 				</td>
 			</tr>
 		);

@@ -46,6 +46,9 @@ class Registration extends Component {
 		fetch("/post/user", requestOptions)
 			.then((response) => {
 				console.log("registration: ", response);
+				if (response.status === 201) {
+					this.props.handleSuccessfulAuth(response.data);
+				}
 			}).catch((error) => {
 				console.log("registration error: ", error);
 			});

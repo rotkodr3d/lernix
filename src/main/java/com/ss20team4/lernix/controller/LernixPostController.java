@@ -21,9 +21,11 @@ import java.util.Map;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -41,6 +43,9 @@ public class LernixPostController {
 	
 	@Autowired
 	UserRepo userRepo;
+	
+	@Autowired
+	PasswordEncoder passwordEncoder;
 	
 	@PostMapping("/learnUnit")
 	public String createLearnUnit() {
@@ -75,11 +80,13 @@ public class LernixPostController {
 	}
 	
 	@PostMapping("/user")
-	public ResponseEntity<String> createUser(@RequestBody User newUser) throws JsonProcessingException {
+	public ResponseEntity<User> createUser(@RequestBody User newUser) throws JsonProcessingException {
 		if (!userRepo.existsById(newUser.getMatNr())) {
-			userRepo.save(newUser);
-			return new ResponseEntity<>(new ObjectMapper().writeValueAsString("{success: true}"), HttpStatus.OK);
+			newUser.setPassword(passwordEncoder.encode(newUser.getPassword()));
+			User savedUser = userRepo.save(newUser);
+			String user = new ObjectMapper().writeValueAsString(savedUser);
+			return ResponseEntity.status(HttpStatus.CREATED).headers(new HttpHeaders()).body(savedUser);
 		}
-		return new ResponseEntity<>(new ObjectMapper().writeValueAsString("{error: {message: Prüfung konnte nicht gespeichert werden!}}"), HttpStatus.BAD_REQUEST);
+		return ResponseEntity.status(HttpStatus.BAD_REQUEST).headers(new HttpHeaders()).body(newUser);
 	}
 }

@@ -11,12 +11,13 @@ class ShowExercises extends Component {
 	constructor() {
 		super();
 		this.state = {
-			exercises: {}
+			exercises: {},
+			matNr: 123456
 		};
 	}
 
 	async getExercises() {
-		let response = await fetch('/get/exercises');
+		let response = await fetch('/get/exercises?matnr=' + this.state.matNr);
 		let body = await response.json();
 
 		this.setState({exercises: body});

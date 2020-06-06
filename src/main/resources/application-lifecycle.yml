@@ -16,6 +16,11 @@ demo-data:
       userName: rotkodr3d
       password: 123
       examsToWrite: 6, 7
+    - matNr: 112233
+      email: email@email.de
+      userName: name
+      password: 321
+      examsToWrite: 6
   exercises:
     - id: 1
       type: Hausarbeit
@@ -31,5 +36,12 @@ demo-data:
       deadline: 07.06.2020
       exerciseForExam: 6
       student: 123456
+    - id: 3
+      type: Projekt
+      timeNeed: 30
+      timeWorked: 22
+      deadline: 07.06.2020
+      exerciseForExam: 6
+      student: 112233
   learn-units:
   

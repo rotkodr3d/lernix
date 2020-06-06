@@ -10,12 +10,14 @@ import com.ss20team4.lernix.repos.ExamRepo;
 import com.ss20team4.lernix.repos.ExerciseRepo;
 import com.ss20team4.lernix.repos.UserRepo;
 
+import java.security.Principal;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -34,8 +36,14 @@ public class LernixGetController {
 	private UserRepo userRepo;
 	
 	@GetMapping("/exercises")
-	public String getExercises() {
+	public String getExercises(@RequestParam(value = "matnr", defaultValue="", required = false) String matnr) {
 		ObjectMapper objectMapper = new ObjectMapper();
+		if (!matnr.trim().isEmpty()) {
+			Integer matNr = Integer.parseInt(matnr);
+			List<Exercise> exercises = exerciseRepo.getExercisesByStudent(userRepo.getOne(matNr));
+			exercises.stream().sorted(Comparator.comparing(Exercise::getDeadline)).collect(Collectors.toList());
+			return toJson(objectMapper, exercises);
+		}
 		List<Exercise> exercises = exerciseRepo.findAll().stream().sorted(Comparator.comparing(Exercise::getDeadline)).collect(Collectors.toList());
 		return toJson(objectMapper, exercises);
 	}
@@ -55,6 +63,15 @@ public class LernixGetController {
 	@GetMapping("/login")
 	public String loginPage() {
 		return "login.html";
+	}
+	
+	
+	@GetMapping("/logged_in")
+	public ResponseEntity<Principal> loggedIn(Principal user) {
+		if (user == null) {
+			return ResponseEntity.ok().body(user);
+		}
+		return ResponseEntity.ok().body(user);
 	}
 	
 	private String toJson(ObjectMapper objectMapper, Object value) {
