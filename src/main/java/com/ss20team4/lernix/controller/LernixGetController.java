@@ -52,6 +52,11 @@ public class LernixGetController {
 		return toJson(objectMapper, exams);
 	}
 	
+	@GetMapping("/login")
+	public String loginPage() {
+		return "login.html";
+	}
+	
 	private String toJson(ObjectMapper objectMapper, Object value) {
 		try {
 			return objectMapper.writeValueAsString(value);

@@ -8,6 +8,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinTable;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 
@@ -24,6 +25,7 @@ public class User {
 	private Integer matNr;
 	
 	@Email
+	@Column(unique = true)
 	private String email;
 	
 	@NotEmpty
@@ -39,6 +41,10 @@ public class User {
 			joinColumns = @JoinColumn(name = "mat_nr"),
 			inverseJoinColumns = @JoinColumn(name = "exam_nr"))
 	private Set<Exam> examsToWrite;
+	
+	@ManyToOne
+    @JoinColumn(name ="role_key")
+    private Role role;
 
 	public Integer getMatNr() {
 		return matNr;
@@ -78,5 +84,13 @@ public class User {
 
 	public void setExamsToWrite(Set<Exam> examsToWrite) {
 		this.examsToWrite = examsToWrite;
+	}
+	
+	public void setRole(Role role) {
+		this.role = role;
+	}
+	
+	public Role getRole() {
+		return role;
 	}
 }

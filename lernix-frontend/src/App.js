@@ -15,6 +15,7 @@ import logo from './logo.svg';
 import './App.css';
 import CreateExam from './exam/CreateExam';
 import Registration from './auth/Registration';
+import Login from './auth/Login';
 
 const App = () => (
   <BrowserRouter>
@@ -29,6 +30,7 @@ const App = () => (
               <Route path="/createExam" component={CreateExam}/>
               <Route path="/exams" component={ShowExams}/>
               <Route path="/register" component={Registration}/>
+              <Route path="/Login.html" component={Login}/>
               <Route exact path="/" component={Home}/>
             </Switch>
           </div>
