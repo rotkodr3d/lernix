@@ -21,6 +21,8 @@ import org.springframework.security.web.savedrequest.RequestCache;
 import org.springframework.security.web.savedrequest.SimpleSavedRequest;
 import org.springframework.web.cors.CorsConfiguration;
 
+import com.ss20team4.lernix.RestAuthEntryPoint;
+
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
@@ -30,6 +32,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     
     @Autowired
     UserDetailsService userDetailsService;
+    
+    @Autowired
+    RestAuthEntryPoint restAuthEntryPoint;
     
     @Autowired
     public void configAuthentication(AuthenticationManagerBuilder auth) throws Exception {
@@ -47,10 +52,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         .antMatchers(HttpMethod.DELETE, "/delete/**").authenticated()
         .and()
         .authorizeRequests().antMatchers(HttpMethod.POST, "/post/user").anonymous()
-        .antMatchers(HttpMethod.OPTIONS, "/**").anonymous()
         .and()
-        .formLogin().loginPage("/login.html")
-        .loginProcessingUrl("/process_login") //http basic
+        .formLogin()
+        .loginProcessingUrl("/process_login").loginProcessingUrl("/login").permitAll() //http basic
+        //.and()
+        //.exceptionHandling().authenticationEntryPoint(restAuthEntryPoint)
         //.usernameParameter("user_name").passwordParameter("password")
         //.successHandler(new RefererRedirectionAuthenticationSuccessHandler())
         .and()

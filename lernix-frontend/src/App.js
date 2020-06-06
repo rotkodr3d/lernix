@@ -6,7 +6,6 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import Home from "./Home"; 
 import Navigation from "./Navigation";
 import AddExercise from "./exercise/AddExercise";
-import ShowExercise from "./exercise/ShowExercise";
 import ShowExercises from "./exercise/ShowExercises";
 import ShowExams from "./exam/ShowExams";
 import ChooseExam from "./exam/ChooseExam";
@@ -16,6 +15,7 @@ import './App.css';
 import CreateExam from './exam/CreateExam';
 import Registration from './auth/Registration';
 import Login from './auth/Login';
+import ExerciseDetails from './exercise/ExerciseDetails';
 
 const App = () => (
   <BrowserRouter>
@@ -31,6 +31,7 @@ const App = () => (
               <Route path="/exams" component={ShowExams}/>
               <Route path="/register" component={Registration}/>
               <Route path="/Login.html" component={Login}/>
+              <Route path="/exerciseDetails" component={ExerciseDetails}/>
               <Route exact path="/" component={Home}/>
             </Switch>
           </div>

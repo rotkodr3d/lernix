@@ -32,18 +32,10 @@ class ShowExercises extends Component {
 			</div>
 			{exercises.length > 0 ? (
 				<Table striped bordered hover>
-					<thead>
-						<tr>
-						<th>Aufgabe</th>
-						<th>Fach</th>
-						<th>Gearbeitete Zeit</th>
-						<th>Benötigte Zeit</th>
-						<th>Fällig am</th>
-						</tr>  
-					</thead>
+					<ExerciseTableHead/>
 					<tbody>
 						{exercises.map((exercise) => (
-						<Exercise type={exercise.type} exam={exercise.exerciseForExam.examName} deadline={exercise.deadline} timeNeed={exercise.timeNeed} timeWorked={exercise.timeWorked} key={exercise.id} />
+						<Exercise id={exercise.id} type={exercise.type} exam={exercise.exerciseForExam.examName} deadline={exercise.deadline} timeNeed={exercise.timeNeed} timeWorked={exercise.timeWorked} key={exercise.id} />
 						))}
 					</tbody>
 				</Table>
@@ -58,4 +50,7 @@ class ShowExercises extends Component {
 	}
 }
 
+const ExerciseTableHead =  () => { 
+	return (<thead><tr><th>Aufgabe</th><th>Fach</th><th>Gearbeitete Zeit</th><th>Benötigte Zeit</th><th>Fällig am</th></tr></thead>)}
+export { ExerciseTableHead };					
 export default ShowExercises;
