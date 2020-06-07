@@ -6,9 +6,11 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.ss20team4.lernix.entity.Exam;
 import com.ss20team4.lernix.entity.Exercise;
+import com.ss20team4.lernix.entity.LearnUnit;
 import com.ss20team4.lernix.entity.User;
 import com.ss20team4.lernix.repos.ExamRepo;
 import com.ss20team4.lernix.repos.ExerciseRepo;
+import com.ss20team4.lernix.repos.LearnUnitRepo;
 import com.ss20team4.lernix.repos.UserRepo;
 
 import java.security.Principal;
@@ -37,6 +39,9 @@ public class LernixGetController {
 	@Autowired
 	private UserRepo userRepo;
 	
+	@Autowired
+	private LearnUnitRepo learnUnitRepo;
+	
 	@GetMapping("/exercises")
 	public String getExercises(@RequestParam(value = "user", defaultValue="", required = false) String userName) {
 		ObjectMapper objectMapper = new ObjectMapper();
@@ -60,6 +65,19 @@ public class LernixGetController {
 		}
 		List<Exam> exams = examRepo.findAll();
 		return toJson(objectMapper, exams);
+	}
+	
+	@GetMapping("/learnreminders")
+	public String getLearnreminders(@RequestParam(value = "user", defaultValue="", required = false) String userName) {
+		ObjectMapper objectMapper = new ObjectMapper();
+		if (!userName.trim().isEmpty()) {
+			User user = userRepo.getUserByUserName(userName);
+			List<LearnUnit> learnUnits = learnUnitRepo.getLearnUnitByLearner(user);
+			learnUnits.stream().sorted(Comparator.comparing(LearnUnit::getLearningDate)).collect(Collectors.toList());
+			return toJson(objectMapper, learnUnits);
+		}
+		List<Exercise> exercises = exerciseRepo.findAll().stream().sorted(Comparator.comparing(Exercise::getDeadline)).collect(Collectors.toList());
+		return toJson(objectMapper, exercises);
 	}
 	
 	@GetMapping("/unchoosenExams")

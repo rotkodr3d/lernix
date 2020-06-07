@@ -18,6 +18,7 @@ import CreateExam from './exam/CreateExam';
 import Registration from './auth/Registration';
 import Login from './auth/Login';
 import ExerciseDetails from './exercise/ExerciseDetails';
+import ShowLearnreminder from './learn-reminder/ShowLearnreminder';
 
 class App extends Component {
   constructor() {
@@ -89,12 +90,12 @@ class App extends Component {
                 <ProtectedRoute path="/createExam" component={CreateExam} {...this.state} />
                 <ProtectedRoute path="/exams" component={ShowExams} {...this.state} />
                 <ProtectedRoute path="/exerciseDetails" component={ExerciseDetails} {...this.state} />
-                <ProtectedRoute path="/learnreminders" component={ExerciseDetails} {...this.state} />
+                <ProtectedRoute path="/learnreminders" component={ShowLearnreminder} {...this.state} />
                 <ProtectedRoute path="/createLearnreminder" component={CreateLearnreminder} {...this.state} />
                 <Route path="/login" component={Login}></Route>
                 <Route path="/register" component={Registration}></Route>
                 <Route exact path={"/"} render={props => (
-                  <Home {...props} handleLogin={this.handleLogin} loggedInStatus={this.state.loggedInStatus} />
+                  <Home {...props} user={this.state.user} handleLogin={this.handleLogin} loggedInStatus={this.state.loggedInStatus} />
                 )} />
               </Switch>
             </div>

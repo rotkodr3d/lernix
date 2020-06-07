@@ -24,7 +24,7 @@ class Home extends Component {
 			<>
 			{
 				this.props.loggedInStatus === "LOGGED_IN" ? (
-					<Dashboard/>
+					<Dashboard {...this.props} />
 				) : (
 				<>
 					<Row>
