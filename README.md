@@ -2,6 +2,9 @@
 
 Repo für Team 4
 
+Lernix ist eine React und Spring-Boot Webanwendung mit der Studenten ihre ToDo's verwalten können.
+So können Aufgaben mit einem Typ z.B. Projekt, mit einer geplanten Dauer, mit der Fälligkeit sowie der dazugehörigen Prüfung (Fach) angelegt werden. 
+
 Um diese App bearbeiten und starten zu können werden folgende Tools benötigt:
 
 * Maven
