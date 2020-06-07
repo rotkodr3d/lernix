@@ -10,16 +10,21 @@ demo-data:
       date: 07.06.2020
       learningTimeNeed: 120
       writeExam: 6
+    - examNr: 8
+      examName: Fortgeschrittene Programmierung
+      date: 10.06.2020
+      learningTimeNeed: 80
+      writeExam: 6
   users:
     - matNr: 123456
       email: derdoktor48@web.de
       userName: rotkodr3d
-      password: 123
+      password: $2a$10$.AIHN1W1X3pIrSsow7Yh0.DpyM93sSZaAeni5ZiMYLUL6hxktb.T2
       examsToWrite: 6, 7
     - matNr: 112233
       email: email@email.de
       userName: name
-      password: 321
+      password: $2a$10$8xoNd9Ylj3icH4n2JauR/.GICZ8oQXaCDjeqCzYZx9HRlj8Y.wzVq
       examsToWrite: 6
   exercises:
     - id: 1

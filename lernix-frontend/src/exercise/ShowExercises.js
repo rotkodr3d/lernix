@@ -8,8 +8,9 @@ class ShowExercises extends Component {
 
 	listItems;
 
-	constructor() {
-		super();
+	constructor(props) {
+		super(props);
+		console.log("exercises const: ", props);
 		this.state = {
 			exercises: {},
 			matNr: 123456
@@ -17,7 +18,7 @@ class ShowExercises extends Component {
 	}
 
 	async getExercises() {
-		let response = await fetch('/get/exercises?matnr=' + this.state.matNr);
+		let response = await fetch('/get/exercises?user=' + this.props.user.username);
 		let body = await response.json();
 
 		this.setState({exercises: body});

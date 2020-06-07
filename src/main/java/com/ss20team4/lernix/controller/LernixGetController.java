@@ -6,6 +6,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.ss20team4.lernix.entity.Exam;
 import com.ss20team4.lernix.entity.Exercise;
+import com.ss20team4.lernix.entity.User;
 import com.ss20team4.lernix.repos.ExamRepo;
 import com.ss20team4.lernix.repos.ExerciseRepo;
 import com.ss20team4.lernix.repos.UserRepo;
@@ -36,11 +37,11 @@ public class LernixGetController {
 	private UserRepo userRepo;
 	
 	@GetMapping("/exercises")
-	public String getExercises(@RequestParam(value = "matnr", defaultValue="", required = false) String matnr) {
+	public String getExercises(@RequestParam(value = "user", defaultValue="", required = false) String userName) {
 		ObjectMapper objectMapper = new ObjectMapper();
-		if (!matnr.trim().isEmpty()) {
-			Integer matNr = Integer.parseInt(matnr);
-			List<Exercise> exercises = exerciseRepo.getExercisesByStudent(userRepo.getOne(matNr));
+		if (!userName.trim().isEmpty()) {
+			User user = userRepo.getUserByUserName(userName);
+			List<Exercise> exercises = exerciseRepo.getExercisesByStudent(user);
 			exercises.stream().sorted(Comparator.comparing(Exercise::getDeadline)).collect(Collectors.toList());
 			return toJson(objectMapper, exercises);
 		}
@@ -49,11 +50,11 @@ public class LernixGetController {
 	}
 	
 	@GetMapping("/exams")
-	public String getExams(@RequestParam(value = "matnr", defaultValue="", required = false) String matnr) {
+	public String getExams(@RequestParam(value = "user", defaultValue="", required = false) String userName) {
 		ObjectMapper objectMapper = new ObjectMapper();
-		if (!matnr.trim().isEmpty()) {
-			Integer matNr = Integer.parseInt(matnr);
-			Set<Exam> exams = userRepo.getOne(matNr).getExamsToWrite();
+		if (!userName.trim().isEmpty()) {
+			User user = userRepo.getUserByUserName(userName);
+			Set<Exam> exams = user.getExamsToWrite();
 			return toJson(objectMapper, exams);
 		}
 		List<Exam> exams = examRepo.findAll();

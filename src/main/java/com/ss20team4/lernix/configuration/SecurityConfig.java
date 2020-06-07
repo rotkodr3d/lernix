@@ -55,7 +55,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         .authorizeRequests().antMatchers(HttpMethod.POST, "/post/user").anonymous()
         .and()
         .formLogin()
-        .loginProcessingUrl("/process_login").loginProcessingUrl("/login").permitAll() //http basic
+        .loginProcessingUrl("/process_login").permitAll() //http basic
         //.and()
         //.exceptionHandling().authenticationEntryPoint(restAuthEntryPoint)
         //.usernameParameter("user_name").passwordParameter("password")

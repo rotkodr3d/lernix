@@ -5,7 +5,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 public class PasswordEnc {
 
 	public static void main(String[] args) {
-		String cryptPw = new BCryptPasswordEncoder().encode("123");
+		String cryptPw = new BCryptPasswordEncoder().encode("321");
 		System.out.println(cryptPw);
 	}
 

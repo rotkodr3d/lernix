@@ -1,6 +1,11 @@
 import React, { Component } from "react";
-import Registration from "./auth/Registration";
 import Login from "./auth/Login";
+
+import Dashboard from "./Dashboard";
+import Row from "react-bootstrap/Row";
+import Col from "react-bootstrap/Col";
+import Button from "react-bootstrap/Button";
+import { Link } from "react-router-dom";
 
 class Home extends Component {
 	constructor(props) {
@@ -16,12 +21,27 @@ class Home extends Component {
 
 	render() {
 		return (
-			<div>
-				<h1>Status: {this.props.loggedInStatus}</h1>
-				<Registration handleSuccessfulAuth={this.handleSuccessfulAuth}/>
-				<Login/>
-			</div>
-		)
+			<>
+			{
+				this.props.loggedInStatus === "LOGGED_IN" ? (
+					<Dashboard/>
+				) : (
+				<>
+					<Row>
+						<h1>Willkommen bei Lernix!</h1>
+					</Row>
+					<Row>
+						<Col>
+							<Button as={Link} to="/login">Login</Button>
+						</Col>
+						<Col>
+							<Button as={Link} to="/register">Registrieren</Button>
+						</Col>
+					</Row>
+				</>	
+			)}
+			</>
+		);
 	}
 }
 

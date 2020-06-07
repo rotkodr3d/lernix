@@ -32,7 +32,6 @@ public class LearnUnit {
 	/**
 	 * Actual time learned
 	 */
-	@NotNull
 	private Integer timeLearned;
 	
 	/**

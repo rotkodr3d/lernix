@@ -3,6 +3,7 @@ import { BrowserRouter, Route, Switch } from "react-router-dom";
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 
+import ProtectedRoute from "./ProtectedRoute";
 import Home from "./Home";
 import Navigation from "./Navigation";
 import AddExercise from "./exercise/AddExercise";
@@ -27,6 +28,7 @@ class App extends Component {
     }
 
     this.handleLogin = this.handleLogin.bind(this);
+    this.checkLoginStatus = this.checkLoginStatus.bind(this);
   }
 
   checkLoginStatus() {
@@ -58,6 +60,9 @@ class App extends Component {
     // }).catch((error) => console.log(error));
   }
 
+  componentWillUpdate() {
+  }
+
   handleLogin(data) {
     this.setState({
       loggedInStatus: "LOGGED_IN",
@@ -73,28 +78,20 @@ class App extends Component {
     return (
       <BrowserRouter>
         <div className="">
-          <Navigation />
+          <Navigation loggedInStatus={this.state.loggedInStatus} />
           <div className="container">
             <div>
               <Switch>
-                <Route path="/addExercise" render={props => (
-                  <AddExercise {...props} loggedInStatus={this.state.loggedInStatus} />
-                )} />
-                <Route path="/exercises" render={props => (
-                  <ShowExercises {...props} loggedInStatus={this.state.loggedInStatus} />
-                )} />
-                <Route path="/chooseExam" render={props => (
-                  <ChooseExam {...props} loggedInStatus={this.state.loggedInStatus} />
-                )} />
-                <Route path="/createExam" render={props => (
-                  <CreateExam {...props} loggedInStatus={this.state.loggedInStatus} />
-                )} />
-                <Route path="/exams" render={props => (
-                  <ShowExams {...props} loggedInStatus={this.state.loggedInStatus} />
-                )} />
-                <Route path="/exerciseDetails" render={props => (
-                  <ExerciseDetails {...props} loggedInStatus={this.state.loggedInStatus} />
-                )} />
+                <ProtectedRoute path="/addExercise" component={AddExercise} {...this.state} />
+                <ProtectedRoute path="/exercises" component={ShowExercises} {...this.state} />
+                <ProtectedRoute path="/chooseExam" component={ChooseExam} {...this.state} />
+                <ProtectedRoute path="/createExam" component={CreateExam} {...this.state} />
+                <ProtectedRoute path="/exams" component={ShowExams} {...this.state} />
+                <ProtectedRoute path="/exerciseDetails" component={ExerciseDetails} {...this.state} />
+                <ProtectedRoute path="/learnreminders" component={ExerciseDetails} {...this.state} />
+                <ProtectedRoute path="/createLearnreminder" component={ExerciseDetails} {...this.state} />
+                <Route path="/login" component={Login}></Route>
+                <Route path="/register" component={Registration}></Route>
                 <Route exact path={"/"} render={props => (
                   <Home {...props} handleLogin={this.handleLogin} loggedInStatus={this.state.loggedInStatus} />
                 )} />
