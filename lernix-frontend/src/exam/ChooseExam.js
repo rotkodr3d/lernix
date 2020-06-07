@@ -27,8 +27,9 @@ class ChooseExam extends Component {
 		const { exams, chooseExam } = this.state;
 		return (
 			<>
+			<h1 className="mt-5">Prüfungen hinzufügen</h1>
 			{exams.length > 0 ? (
-				<Table>
+				<Table className="mt-5" striped bordered hover>
 					<thead>
 						<tr>
 							<th>Prüfungsnummer</th>
@@ -40,7 +41,7 @@ class ChooseExam extends Component {
 					</thead>
 					<tbody>
 						{exams.map((exam) => (
-							<Exam examNr={exam.examNr} examName={exam.examName} date={exam.date} learningTimeNeed={exam.learningTimeNeed} chooseExam={chooseExam} key={exam.examNr} />
+							<Exam examNr={exam.examNr} examName={exam.examName} date={exam.date} learningTimeNeed={exam.learningTimeNeed} chooseExam={chooseExam} {...this.props} key={exam.examNr} />
 						))}
 					</tbody>
 				</Table>

@@ -29,11 +29,11 @@ class ShowExercises extends Component {
 		const { exercises } = this.state;
 		return(
 		<>
-			<div>
+			<div className="mt-5">
 				<h1>Deine Aufgaben</h1>
 			</div>
 			{exercises.length > 0 ? (
-				<Table striped bordered hover>
+				<Table className="mt-5" striped bordered hover>
 					<ExerciseTableHead/>
 					<tbody>
 						{exercises.map((exercise) => (
@@ -53,6 +53,6 @@ class ShowExercises extends Component {
 }
 
 const ExerciseTableHead =  () => { 
-	return (<thead><tr><th>Aufgabe</th><th>Fach</th><th>Gearbeitete Zeit</th><th>Benötigte Zeit</th><th>Fällig am</th></tr></thead>)}
+	return (<thead><tr><th>Aufgabe</th><th>Fach</th><th>Gearbeitete Zeit</th><th>Geplante Zeit</th><th>Fällig am</th></tr></thead>)}
 export { ExerciseTableHead };					
 export default ShowExercises;

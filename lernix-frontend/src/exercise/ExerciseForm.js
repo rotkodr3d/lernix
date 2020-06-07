@@ -8,27 +8,29 @@ import Row from "react-bootstrap/Row"
 import Option from "../Option";
 
 class ExerciseForm extends Component {
-	constructor() {
-		super();
+	constructor(props) {
+		super(props);
 		this.state = {
 			exerciseForExam: "",
 			type: "",
 			deadline: ""
 		}
+		this.handleSubmit = this.handleSubmit.bind(this);
 	}
 
 	handleSubmit(e) {
-		const { exerciseForExam, type, deadline } = this.state;
-		const { addExercise, exams } = this.props;
 		e.preventDefault();
+		const { exerciseForExam, type, deadline, timeNeed } = this.state;
+		const { addExercise, exams } = this.props;
 
-		if (type === "" || deadline == null) {
+		if (type === "" || deadline == null || timeNeed === "") {
 			alert("Bitte überprüfe deine Eingaben auf Vollständigkeit.");
 		} else {
 			addExercise({
 				exerciseForExam,
 				type,
-				deadline
+				deadline,
+				timeNeed
 			});
 		}
 	}
@@ -56,6 +58,12 @@ class ExerciseForm extends Component {
 					<Form.Label column md="3">Aufgaben Typ</Form.Label>
 					<Col md={{ span: 4, offset: 1 }}>
 						<Form.Control id="type" name="type" type="text" placeholder="z.B Projekt, Hausarbeit" onChange={this.onChange}></Form.Control>
+					</Col>
+				</Form.Group>
+				<Form.Group as={Row}>
+					<Form.Label column md="3">Geplante Dauer</Form.Label>
+					<Col md={{ span: 4, offset: 1 }}>
+						<Form.Control id="timeNeed" name="timeNeed" type="number" placeholder="" onChange={this.onChange}></Form.Control>
 					</Col>
 				</Form.Group>
 				<Form.Group as={Row}>

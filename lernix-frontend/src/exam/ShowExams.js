@@ -27,10 +27,10 @@ class ShowExams extends Component {
 		return (
 			<>
 				<div>
-					<h1>Deine Prüfungen</h1>
+					<h1 className="mt-5">Deine Prüfungen</h1>
 				</div>
 				{exams.length > 0 ? (
-				<Table striped bordered hover>
+				<Table className="mt-5" striped bordered hover>
 					<thead>
 						<tr>
 						<th>Prüfungsnummer</th>

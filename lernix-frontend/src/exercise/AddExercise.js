@@ -18,7 +18,7 @@ class AddExercise extends Component {
 		}
 	}
 	async getData() {
-		let response = await fetch('/get/exams');
+		let response = await fetch('/get/exams?user=' + this.props.user.username);
 		let body = await response.json();
 		console.log(body)
 		let exams  = body;
@@ -28,6 +28,7 @@ class AddExercise extends Component {
 	onSubmit = (newExercise) => {
 		//const {exerciseForExam, type, deadline} = this.state;
 
+		newExercise.user = this.props.user.username;
 		const requestOptions = {
 			method: 'POST',
 			headers: {'Content-Type': 'application/json'},
@@ -62,9 +63,9 @@ class AddExercise extends Component {
 				<Col md="10">
 					{
 						exams.length > 0 ? (
-							<ExerciseForm exams={exams} addExercise={this.onSubmit}/>
+							<ExerciseForm props={this.props} exams={exams} addExercise={this.onSubmit}/>
 						) : (
-							<Alert className="mt-5" variant="warning"></Alert>
+							<Alert className="mt-5" variant="warning">Hinweis: Du hast dir keine Prüfung zugewiesen. Bitte weise dir eine Prüfung zu.</Alert>
 						)
 					}
 				</Col>

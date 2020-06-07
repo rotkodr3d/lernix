@@ -64,8 +64,10 @@ public class LernixPostController {
 		try {
 			formattedDeadline = formatter.parse(json.get("deadline"));
 			Exercise exercise = new Exercise();
+			exercise.setStudent(userRepo.getUserByUserName(json.get("user")));
 			exercise.setExerciseForExam(examRepo.getOne(Integer.parseInt(json.get("exerciseForExam"))));
 			exercise.setType(json.get("type"));
+			exercise.setTimeNeed(Float.parseFloat(json.get("timeNeed")));
 			exercise.setDeadline(new Date(formattedDeadline.getTime()));
 			exerciseRepo.save(exercise);
 		} catch (Exception e) {
@@ -113,7 +115,17 @@ public class LernixPostController {
 			e.printStackTrace();
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).headers(new HttpHeaders()).build();
 		}
-		return ResponseEntity.status(HttpStatus.CREATED).headers(new HttpHeaders()).body(savedLearnUnit);
+		return ResponseEntity.status(HttpStatus.CREATED).headers(new HttpHeaders()).body(savedLearnUnit);	
+	}
+	
+	@PostMapping("/chooseExam")
+	public ResponseEntity<String> chooseExam(@RequestBody Map<String,String> choosenExam) {
+		User user = userRepo.getUserByUserName(choosenExam.get("user"));
+		Exam exam = examRepo.getOne(Integer.parseInt(choosenExam.get("examNr")));
 		
+		user.getExamsToWrite().add(exam);
+		userRepo.save(user);
+		
+		return ResponseEntity.status(HttpStatus.OK).headers(new HttpHeaders()).build();
 	}
 }
