@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import Redirect from "react-router-dom/Redirect";
 
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
@@ -14,7 +15,8 @@ class Registration extends Component {
 			email: "",
 			password: "",
 			passwordConfirmation: "",
-			registrationErrors: ""
+			registrationErrors: "",
+			registrationSuccessful: false
 		}
 
 		this.handleSubmit = this.handleSubmit.bind(this);
@@ -47,7 +49,8 @@ class Registration extends Component {
 			.then((response) => {
 				console.log("registration: ", response);
 				if (response.status === 201) {
-					this.props.handleSuccessfulAuth(response.data);
+					//this.props.handleSuccessfulAuth(response.data);
+					this.setState({registrationSuccessful: true});
 				}
 			}).catch((error) => {
 				console.log("registration error: ", error);
@@ -57,7 +60,10 @@ class Registration extends Component {
 	render() {
 		return (
 			<div>
-				<Form onSubmit={this.handleSubmit}>
+			{!this.state.registrationSuccessful ? (
+				<>
+				<h1 className="mt-5">Neues Konto anlegen</h1>
+				<Form className="mt-5" onSubmit={this.handleSubmit}>
 					<Form.Group as={Row}>
 						<Form.Label column md="3">Matrikelnummer</Form.Label>
 						<Col md={{ span: 4, offset: 1 }}>
@@ -92,6 +98,10 @@ class Registration extends Component {
 						Registrieren
 					</Button>
 				</Form>
+				</>
+			) : (
+				<Redirect to="/login/?registrationSuccessful" />
+			)}
 			</div>
 		)
 	}

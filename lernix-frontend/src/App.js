@@ -10,6 +10,7 @@ import AddExercise from "./exercise/AddExercise";
 import ShowExercises from "./exercise/ShowExercises";
 import ShowExams from "./exam/ShowExams";
 import ChooseExam from "./exam/ChooseExam";
+import CreateLearnreminder from "./learn-reminder/CreateLearnreminder";
 
 import logo from './logo.svg';
 import './App.css';
@@ -89,7 +90,7 @@ class App extends Component {
                 <ProtectedRoute path="/exams" component={ShowExams} {...this.state} />
                 <ProtectedRoute path="/exerciseDetails" component={ExerciseDetails} {...this.state} />
                 <ProtectedRoute path="/learnreminders" component={ExerciseDetails} {...this.state} />
-                <ProtectedRoute path="/createLearnreminder" component={ExerciseDetails} {...this.state} />
+                <ProtectedRoute path="/createLearnreminder" component={CreateLearnreminder} {...this.state} />
                 <Route path="/login" component={Login}></Route>
                 <Route path="/register" component={Registration}></Route>
                 <Route exact path={"/"} render={props => (

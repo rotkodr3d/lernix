@@ -4,6 +4,7 @@ import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
+import Alert from "react-bootstrap/Alert";
 
 class Login extends Component {
 	constructor(props) {
@@ -50,11 +51,13 @@ class Login extends Component {
 	}
 
 	render() {
+		const registrationSuccessful = this.props.location.search;
 		return(
 			<div>
+				{registrationSuccessful === "?registrationSuccessful" ? <Alert variant="success">Registrierung war erfolgreich! Logg dich doch gleich ein!</Alert> : <></>}
 				<Form onSubmit={this.handleSubmit}>
 					<Form.Group as={Row}>
-						<Form.Label column md="3">E-Mail</Form.Label>
+						<Form.Label column md="3">Username</Form.Label>
 						<Col md={{ span: 4, offset: 1 }}>
 							<Form.Control id="user_name" name="user_name" type="text" placeholder="" onChange={this.handleChange}></Form.Control>
 						</Col>

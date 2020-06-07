@@ -12,6 +12,7 @@ import com.ss20team4.lernix.repos.ExerciseRepo;
 import com.ss20team4.lernix.repos.UserRepo;
 
 import java.security.Principal;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Set;
@@ -58,6 +59,19 @@ public class LernixGetController {
 			return toJson(objectMapper, exams);
 		}
 		List<Exam> exams = examRepo.findAll();
+		return toJson(objectMapper, exams);
+	}
+	
+	@GetMapping("/unchoosenExams")
+	public String getUnchoosenExams(@RequestParam(value = "user", defaultValue="", required = false) String userName) {
+		ObjectMapper objectMapper = new ObjectMapper();
+		List<Exam> exams = examRepo.findAll();
+		if (!userName.trim().isEmpty()) {
+			User user = userRepo.getUserByUserName(userName);
+			Set<Exam> examsToWrite = user.getExamsToWrite();
+			List<Exam> unchoosenExams = exams.stream().filter(exam -> !examsToWrite.contains(exam)).collect(Collectors.toList());
+			return toJson(objectMapper, unchoosenExams);
+		}
 		return toJson(objectMapper, exams);
 	}
 	

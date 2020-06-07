@@ -34,7 +34,7 @@ class CreateExam extends Component {
 			.then((json) => {
 				console.log(json["error"]);
 				if (response.status === 200) {
-					this.setState({alert: <Alert variant="success" className="mt-5">Aufgabe wurde angelegt!</Alert>});
+					this.setState({alert: <Alert variant="success" className="mt-5">Prüfung wurde angelegt!</Alert>});
 				} else if (response.status === 400) {
 					this.setState({alert: <Alert variant="warning" className="mt-5">Bitte überprüfe deine Eingaben und versuche es erneut.</Alert>});
 				}
@@ -50,11 +50,11 @@ class CreateExam extends Component {
 		const { error } = this.state;
 		return(
 		<>
-			<Row className="justify-content-md-center">
+			<Row className="">
 				<h1 className="center mt-3">Prüfung erstellen</h1>
 			</Row>
 			{this.state.alert}
-			<Row className="justify-content-md-center">
+			<Row className="">
 				<Col md="10">
 					<ExamForm createExam={this.onSubmit}/>
 				</Col>

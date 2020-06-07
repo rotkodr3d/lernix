@@ -10,6 +10,15 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotNull;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
+/**
+ * 
+ * @author Christian
+ * Actually the learn reminder
+ *
+ */
+
 @Entity
 public class LearnUnit {
 	
@@ -21,6 +30,7 @@ public class LearnUnit {
 	 * The date the user wants to learn
 	 */
 	@NotNull
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern= "dd.MM.yyyy")
 	private Date learningDate;
 	
 	/**

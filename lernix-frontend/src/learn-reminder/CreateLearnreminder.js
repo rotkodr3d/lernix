@@ -5,38 +5,49 @@ import Col from "react-bootstrap/Col";
 import Form from "react-bootstrap/Form";
 import Row from "react-bootstrap/Row"
 
+import Option from "../Option";
+import Alert from "react-bootstrap/Alert";
+
 class CreateLearnreminder extends Component {
 	constructor() {
 		super();
 		this.state = {
-			examNr: "",
-			examName: "",
-			date: "",
-			learningTimeNeed: ""
+			learningForExam: "",
+			learningDate: "",
+			timeToLearn: "",
+			exams: {}
 		}
 	}
 
 	async getData() {
-		let response = await fetch('/get/exams');
+		let response = await fetch('/get/exams?user=' + this.props.user.username);
 		let body = await response.json();
 		console.log(body)
 		let exams  = body;
 		this.setState({exams: exams});
 	}
 
-	handleSubmit(e) {
-		const { examNr, learningDate, timeToLearn } = this.state;
+	onSubmit(e) {
 		e.preventDefault();
+		let { learningForExam, learningDate, timeToLearn } = this.state;
 
-		if (examNr === "" || examName === "" || date === "" || learningTimeNeed === "") {
+		if (learningForExam === "" || learningDate === "" || timeToLearn === "") {
 			alert("Bitte überprüfe deine Eingaben auf Vollständigkeit.");
 		} else {
-			createExam({
-				examNr, 
-				examName, 
-				date, 
-				learningTimeNeed
-			});
+			let learnreminder = {
+				learningForExam: learningForExam,
+				learningDate: learningDate,
+				timeToLearn: timeToLearn,
+				learner: this.props.user.username
+			};
+			const requestOptions = {
+				method: 'POST',
+				headers: {'Content-Type': 'application/json'},
+				body: JSON.stringify(learnreminder)
+			}
+			fetch("/post/learnreminder", requestOptions)
+				.then((response) => response.json()
+				.then((json) => {}));
 		}
 	}
 
@@ -49,41 +60,42 @@ class CreateLearnreminder extends Component {
 	}
 
 	render() {
-		const { examNr, learningDate, timeToLearn } = this.state;
+		const { learningForExam, learningDate, timeToLearn, exams } = this.state;
 		return(
-			<Form className="mt-5" onSubmit={(event) => this.handleSubmit(event)}>
-				<Form.Group as={Row}>
-					<Form.Label column md="3">Lernerinnerung für Prüfung</Form.Label>
-					<Col md={{ span: 4, offset: 1 }}>
-						<Form.Control as="select" name="exerciseForExam" id="idExerciseForExam" onClick={this.onChange}>
-							{
-								exams.map((exam) => <Option value={exam.examNr} text={exam.examName} key={exam.examNr} />)
-							}
-						</Form.Control>
-					</Col>
-				</Form.Group>
-				<Form.Group as={Row}>
-					<Form.Label column md="3">Prüfungsfach</Form.Label>
-					<Col md={{ span: 4, offset: 1 }}>
-						<Form.Control id="examName" name="examName" type="text" placeholder="z.B. Fortgeschrittene Programmierung" onChange={this.onChange}></Form.Control>
-					</Col>
-				</Form.Group>
-				<Form.Group as={Row}>
-					<Form.Label column md="3">Prüfungsdatum</Form.Label>
-					<Col md={{ span: 4, offset: 1 }}>
-						<Form.Control id="date" name="date" type="date" placeholder="" onChange={this.onChange}></Form.Control>
-					</Col>
-				</Form.Group>
-				<Form.Group as={Row}>
-					<Form.Label column md="3">Lernaufwand</Form.Label>
-					<Col md={{ span: 4, offset: 1 }}>
-						<Form.Control id="learningTimeNeed" name="learningTimeNeed" type="number" placeholder="" onChange={this.onChange}></Form.Control>
-					</Col>
-				</Form.Group>
-				<Button variant="primary" type="submit">
-					Anlegen
-				</Button>
-			</Form>
+			<>
+			<h1 className="mt-5">Lernerinnerung anlegen</h1>
+			{exams.length > 0 ? (
+				<Form className="mt-5" onSubmit={(event) => this.onSubmit(event)}>
+					<Form.Group as={Row}>
+						<Form.Label column md="3">Lernerinnerung für Prüfung</Form.Label>
+						<Col md={{ span: 4, offset: 1 }}>
+							<Form.Control as="select" name="learningForExam" id="idLearningForExam" onClick={this.onChange}>
+								{
+									exams.map((exam) => <Option value={exam.examNr} text={exam.examName} key={exam.examNr} />)
+								}
+							</Form.Control>
+						</Col>
+					</Form.Group>
+					<Form.Group as={Row}>
+						<Form.Label column md="3">Tag an dem du lernen möchtest</Form.Label>
+						<Col md={{ span: 4, offset: 1 }}>
+							<Form.Control id="learningDate" name="learningDate" type="date" placeholder="" onChange={this.onChange}></Form.Control>
+						</Col>
+					</Form.Group>
+					<Form.Group as={Row}>
+						<Form.Label column md="3">Geplante Lerndauer</Form.Label>
+						<Col md={{ span: 4, offset: 1 }}>
+							<Form.Control id="timeToLearn" name="timeToLearn" type="number" placeholder="" onChange={this.onChange}></Form.Control>
+						</Col>
+					</Form.Group>
+					<Button variant="primary" type="submit">
+						Anlegen
+					</Button>
+					</Form>	
+				) : (
+					<Alert variant="warning">HINWEIS! Du hast dir keine Prüfungen hinzugefügt. Bitte füge dir eine hinzu.</Alert>
+				)}
+			</>
 		);
 	}
 }

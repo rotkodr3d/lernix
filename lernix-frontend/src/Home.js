@@ -32,8 +32,11 @@ class Home extends Component {
 					</Row>
 					<Row>
 						<Col>
+							<p>Leider mag Spring den Post von dem Formular nicht deshalb bitte über "http://localhost:8080/login" einloggen :/</p>
 							<Button as={Link} to="/login">Login</Button>
 						</Col>
+					</Row>
+					<Row className="mt-5">
 						<Col>
 							<Button as={Link} to="/register">Registrieren</Button>
 						</Col>

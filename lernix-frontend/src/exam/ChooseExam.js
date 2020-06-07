@@ -16,7 +16,7 @@ class ChooseExam extends Component {
 	}
 
 	async getExams() {
-		let response = await fetch('/get/exams');
+		let response = await fetch('/get/unchoosenExams?' + 'user=' + this.props.user.username);
 		let body = await response.json();
 
 		this.setState({exams: body});

@@ -7,9 +7,11 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.ss20team4.lernix.entity.Exam;
 import com.ss20team4.lernix.entity.Exercise;
+import com.ss20team4.lernix.entity.LearnUnit;
 import com.ss20team4.lernix.entity.User;
 import com.ss20team4.lernix.repos.ExamRepo;
 import com.ss20team4.lernix.repos.ExerciseRepo;
+import com.ss20team4.lernix.repos.LearnUnitRepo;
 import com.ss20team4.lernix.repos.UserRepo;
 
 import java.sql.Date;
@@ -43,6 +45,9 @@ public class LernixPostController {
 	
 	@Autowired
 	UserRepo userRepo;
+	
+	@Autowired
+	LearnUnitRepo learnUnitRepo;
 	
 	@Autowired
 	PasswordEncoder passwordEncoder;
@@ -88,5 +93,27 @@ public class LernixPostController {
 			return ResponseEntity.status(HttpStatus.CREATED).headers(new HttpHeaders()).body(savedUser);
 		}
 		return ResponseEntity.status(HttpStatus.BAD_REQUEST).headers(new HttpHeaders()).body(newUser);
+	}
+	
+	@PostMapping("/learnreminder")
+	public ResponseEntity<LearnUnit> createUser(@RequestBody Map<String,String> newLearnUnit) throws JsonProcessingException {
+		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+        java.util.Date learningDate;
+        LearnUnit savedLearnUnit = null;
+        
+        try {
+			learningDate = formatter.parse(newLearnUnit.get("learningDate"));
+			LearnUnit learnUnit = new LearnUnit();
+			learnUnit.setExam(examRepo.getOne(Integer.parseInt(newLearnUnit.get("learningForExam"))));
+			learnUnit.setLearner(userRepo.getUserByUserName(newLearnUnit.get("learner")));
+			learnUnit.setLearningDate(new Date(learningDate.getTime()));
+			learnUnit.setTimeToLearn(Integer.parseInt(newLearnUnit.get("timeToLearn")));
+			savedLearnUnit = learnUnitRepo.save(learnUnit);
+		} catch (ParseException e) {
+			e.printStackTrace();
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).headers(new HttpHeaders()).build();
+		}
+		return ResponseEntity.status(HttpStatus.CREATED).headers(new HttpHeaders()).body(savedLearnUnit);
+		
 	}
 }

@@ -35,7 +35,7 @@ class Navigation extends Component {
 									anzeigen
 								</NavDropdown.Item>
 								<NavDropdown.Item as={Link} to="/addExercise">
-									hinzufügen
+									erstellen
 								</NavDropdown.Item>
 							</NavDropdown>
 							<NavDropdown title="Lernerinnerung">
@@ -43,7 +43,7 @@ class Navigation extends Component {
 									anzeigen
 								</NavDropdown.Item>
 								<NavDropdown.Item as={Link} to="/createLearnreminder">
-									anlegen
+									erstellen
 								</NavDropdown.Item>
 							</NavDropdown>
 							<NavDropdown title="Profil">

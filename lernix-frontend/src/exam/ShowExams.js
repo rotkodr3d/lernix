@@ -15,7 +15,7 @@ class ShowExams extends Component {
 	}
 
 	async getExams() {
-		let response = await fetch('/get/exams?matnr=' + this.state.matNr);
+		let response = await fetch('/get/exams?user=' + this.props.user.username);
 		let body = await response.json();
 
 		this.setState({exams: body});
