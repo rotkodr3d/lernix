@@ -29,15 +29,14 @@ class Login extends Component {
 	handleSubmit(event) {
 		event.preventDefault();
 		const { user_name, password } = this.state;
+		const bodystr = "username=" + user_name + "&password=" + password;
 		const requestOptions = {
 			method: 'POST',
-			headers: {'Content-Type': 'application/json'},
+			headers: {'Content-Type': 'application/x-www-form-urlencoded'},
 			credentials: 'include',
-			body: JSON.stringify({ user: {
-				user_name: user_name,
-				password: password
-			}})
+			body: bodystr
 		}
+		
 		console.log("login?", requestOptions);
 		fetch("/process_login", requestOptions)
 			.then((response) => {
